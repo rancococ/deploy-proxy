@@ -1,0 +1,45 @@
+##########################################################################
+# 部署配置文件(base)
+# 本配置文件(xx.yml)中的变量(${xxx})是从同级目录下的.env文件中读取的
+##########################################################################
+# compose支持的版本2
+version: "2"
+services:
+  # nginx
+  nginx:
+    image: ${IMAGE_NGINX}
+    container_name: "nginx.${PRODUCT_NAME}.${COMPANY_NAME}"
+    hostname: "nginx.${PRODUCT_NAME}.${COMPANY_NAME}"
+    restart: "always"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./volume/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./volume/nginx/conf/server.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./volume/nginx/data:/usr/share/nginx/html:ro
+    ports:
+      - "8081:8080"
+    networks:
+      mynet:
+        ipv4_address: 172.16.100.10
+  # httpd
+  httpd:
+    image: ${IMAGE_HTTPD}
+    container_name: "httpd.${PRODUCT_NAME}.${COMPANY_NAME}"
+    hostname: "httpd.${PRODUCT_NAME}.${COMPANY_NAME}"
+    restart: "always"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./volume/httpd/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+      - ./volume/httpd/data:/usr/local/apache2/htdocs:ro
+    ports:
+      - "8082:8080"
+    networks:
+      mynet:
+        ipv4_address: 172.16.100.20
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.100.0/24"
