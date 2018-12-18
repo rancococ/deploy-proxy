@@ -97,7 +97,7 @@ fun_log_echo() {
 fun_import_images() {
     fun_log_echo "\>\>\>import images for release."
     if [ "${image_local}" = "true" ]; then
-        docker load -i "${base_dir}/images/base.img"
+        docker load -i "${base_dir}/base/images/base.img"
     fi
     return $re_ok
 }
@@ -106,8 +106,9 @@ fun_import_images() {
 # deploy images
 fun_deploy_images() {
     fun_log_echo "\>\>\>deploy images for release."
-    chmod +x ${base_dir}/*.sh
-    chmod 777 ${base_dir}/volume/proxy/data
+    chmod +x ${base_dir}/*/*.sh
+    chmod 777 ${base_dir}/base/volume/httpd/data
+    chmod 777 ${base_dir}/base/volume/nginx/data
     return $re_ok
 }
 

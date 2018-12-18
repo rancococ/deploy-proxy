@@ -29,9 +29,9 @@ cd ${BASE_DIR}
 
 # set docker compose info
 COMPOSE_BIN=/usr/local/bin/docker-compose
-COMPOSE_YML=${BASE_DIR}/compose.yml
+COMPOSE_YML=${BASE_DIR}/base.yml
 PROJECT_DIR=${BASE_DIR}
-PROJECT_NAME=compose
+PROJECT_NAME=base
 
 ACTION_FLAG=
 
