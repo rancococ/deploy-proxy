@@ -17,6 +17,8 @@ services:
       - ./volume/nginx/conf/http.d/default.conf:/etc/nginx/http.d/default.conf:ro
       - ./volume/nginx/conf/stream.d/smtp_163.conf:/etc/nginx/stream.d/smtp_163.conf:ro
       - ./volume/nginx/data:/usr/share/nginx/html:ro
+    extra_hosts:
+      - "nginx.${PRODUCT_NAME}.${COMPANY_NAME}:172.16.110.10"
     ports:
       - "8081:8080"
       - "25:25"
@@ -33,6 +35,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./volume/httpd/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
       - ./volume/httpd/data:/usr/local/apache2/htdocs:ro
+    extra_hosts:
+      - "httpd.${PRODUCT_NAME}.${COMPANY_NAME}:172.16.110.20"
     ports:
       - "6969:8080"
     networks:
